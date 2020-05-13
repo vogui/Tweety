@@ -28,3 +28,4 @@ function add (name, content) {
   for (let i = 0; i < 10; i++) {
     module.exports.add( getFakeName(), getFakeTweet() );
   }
+  console.log(data)
