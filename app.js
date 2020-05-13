@@ -1,5 +1,7 @@
 const express = require('express');
+const nunjucks = require('nunjucks');
 const app = express();
+
 
 
 function loggingMiddleware(req, res, next){
@@ -13,15 +15,25 @@ app.get('/usuarios', (req, res, next)=>{
     res.send('hola')
 })
 
+app.set('view engine', 'html');
+app.engine('html', nunjucks.render); 
+nunjucks.configure('views'); 
 
+var locals = {
+    title: 'personajes',
+    people: [
+        { name: 'Gandalf'},
+        { name: 'Frodo' },
+        { name: 'Hermione'},
+        { name: 'fermione'}
 
+    ]
+};
 
-app.use(function (req, res, next) {
-    // hacé tu logueo acá.
-    // llamá a `next`. Sino tu app recibirá pedidos 
-    // pero no responderá adecuadamente.
-})
-
+//nunjucks.configure('views',{noCache: true});
+nunjucks.render('index.html', locals, function (err, output) {
+    console.log(output);
+});
 
 
 var port = 3000;
